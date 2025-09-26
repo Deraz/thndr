@@ -20,6 +20,7 @@ export default {
           900: '#1e3a8a',
           950: '#172554',
         },
+        logo: '#0298C8',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -5,6 +5,7 @@ A modern, responsive React application for exploring Nasdaq stock market data wi
 ## ✨ Features
 
 ### 🎯 Core Functionality
+- **Splash Screen**: Branded loading experience with Nasdaq logo
 - **Live Stock Data**: Real-time stock listings from Polygon.io API
 - **Infinite Scrolling**: Seamless browsing through thousands of stocks
 - **Smart Search**: Debounced search with backend filtering
@@ -35,6 +36,12 @@ User Interaction → React Query → Stock Service → Polygon.io API
                                       ↓
                               Rate Limit Tracking
 ```
+
+### 🏗️ Feature-Based Architecture
+- **Splash Feature**: Self-contained splash screen with timing logic
+- **Explore Feature**: Complete stock exploration functionality
+- **Shared Components**: Reusable UI components across features
+- **Clean Imports**: Each feature exports through index.ts
 
 ### 🎯 Key Assumptions
 
@@ -181,6 +188,10 @@ VITE_QUERY_REFETCH_INTERVAL=300000       # 5 minutes (ms)
 VITE_SEARCH_DEBOUNCE_DELAY=1000          # Search delay (ms)
 VITE_RATE_LIMIT_UPDATE_INTERVAL=1000     # UI update interval (ms)
 VITE_SCROLL_THRESHOLD=1000               # Infinite scroll trigger (px)
+
+# Splash Screen
+VITE_SPLASH_DURATION=3000                # Splash screen duration (ms)
+VITE_SPLASH_FADE_DURATION=500            # Fade out duration (ms)
 ```
 
 #### 📱 Application
@@ -204,11 +215,14 @@ src/
 ├── components/          # Reusable UI components
 │   └── ui/             # Base UI components (Modal, SearchInput, etc.)
 ├── features/           # Feature-based organization
-│   └── explore/        # Stock exploration feature
-│       ├── components/ # Feature-specific components
-│       ├── hooks/      # Custom hooks
-│       ├── services/   # API services
-│       └── types/      # TypeScript definitions
+│   ├── explore/        # Stock exploration feature
+│   │   ├── components/ # Feature-specific components
+│   │   ├── hooks/      # Custom hooks
+│   │   ├── services/   # API services
+│   │   └── types/      # TypeScript definitions
+│   └── splash/         # Splash screen feature
+│       ├── components/ # SplashScreen component
+│       └── index.ts    # Feature exports
 ├── lib/                # Utility libraries
 │   ├── polygonApi.ts   # Polygon.io API client
 │   └── utils.ts        # Helper functions

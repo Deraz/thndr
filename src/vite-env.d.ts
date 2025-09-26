@@ -27,6 +27,10 @@ interface ImportMetaEnv {
   readonly VITE_RATE_LIMIT_UPDATE_INTERVAL: string
   readonly VITE_SCROLL_THRESHOLD: string
   
+  // Splash Screen Configuration
+  readonly VITE_SPLASH_DURATION: string
+  readonly VITE_SPLASH_FADE_DURATION: string
+  
   // localStorage Configuration
   readonly VITE_RATE_LIMIT_STORAGE_KEY: string
 }
