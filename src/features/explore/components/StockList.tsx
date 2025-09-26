@@ -27,7 +27,7 @@ const StockList = ({ searchQuery, onStockClick }: StockListProps) => {
   const handleScroll = useCallback(() => {
     if (
       window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.offsetHeight - 1000 &&
+      document.documentElement.offsetHeight - (parseInt(import.meta.env.VITE_SCROLL_THRESHOLD) || 1000) &&
       hasNextPage &&
       !isFetchingNextPage
     ) {

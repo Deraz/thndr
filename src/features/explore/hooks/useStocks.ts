@@ -38,8 +38,8 @@ export const useStocks = (searchQuery: string = '') => {
       return lastPage.hasMore ? allPages.length : undefined
     },
     initialPageParam: 0,
-    staleTime: 2 * 60 * 1000, // 2 minutes stale time for stock data
-    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes for fresh data
+    staleTime: parseInt(import.meta.env.VITE_QUERY_STALE_TIME) || 2 * 60 * 1000, // 2 minutes stale time for stock data
+    refetchInterval: parseInt(import.meta.env.VITE_QUERY_REFETCH_INTERVAL) || 5 * 60 * 1000, // Refetch every 5 minutes for fresh data
   })
 
   // Flatten all pages into a single array

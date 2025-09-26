@@ -65,9 +65,10 @@ const StockDetailModal = ({ stock, isOpen, onClose }: StockDetailModalProps) => 
     }
     
     // Update rate limit status
+    const updateInterval = parseInt(import.meta.env.VITE_RATE_LIMIT_UPDATE_INTERVAL) || 1000
     const interval = setInterval(() => {
       setRateLimitStatus(getRateLimitStatus())
-    }, 1000)
+    }, updateInterval)
 
     return () => clearInterval(interval)
   }, [isOpen, stock, fetchStockData])

@@ -12,9 +12,10 @@ const Navbar = ({ onSearch, searchQuery }: NavbarProps) => {
   const [rateLimitStatus, setRateLimitStatus] = useState(getRateLimitStatus())
 
   useEffect(() => {
+    const updateInterval = parseInt(import.meta.env.VITE_RATE_LIMIT_UPDATE_INTERVAL) || 1000
     const interval = setInterval(() => {
       setRateLimitStatus(getRateLimitStatus())
-    }, 1000)
+    }, updateInterval)
 
     return () => clearInterval(interval)
   }, [])
@@ -28,9 +29,10 @@ const Navbar = ({ onSearch, searchQuery }: NavbarProps) => {
     }
 
     // Debounce search to avoid too many calls
+    const debounceDelay = parseInt(import.meta.env.VITE_SEARCH_DEBOUNCE_DELAY) || 1000
     const timeoutId = setTimeout(() => {
       onSearch(value)
-    }, 1000)
+    }, debounceDelay)
 
     return () => clearTimeout(timeoutId)
   }

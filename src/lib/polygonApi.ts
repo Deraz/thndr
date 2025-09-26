@@ -1,15 +1,17 @@
-const API_KEY = import.meta.env.VITE_POLYGON_API_KEY || 'fQEPVuqDY77cA20ISr1JpVdXk9jGXGPS'
-const BASE_URL = 'https://api.polygon.io'
+// Environment configuration with fallbacks
+const API_KEY = import.meta.env.VITE_POLYGON_API_KEY
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://api.polygon.io'
 
-// Rate limiting and retry configuration
-const MAX_RETRIES = 2
-const BASE_DELAY = 15000 // 15 seconds
-const MAX_DELAY = 60000 // 1 minute max delay
+// Rate limiting and retry configuration from environment
+const MAX_RETRIES = parseInt(import.meta.env.VITE_API_MAX_RETRIES) || 2
+const BASE_DELAY = parseInt(import.meta.env.VITE_API_BASE_DELAY) || 15000 // 15 seconds
+const MAX_DELAY = parseInt(import.meta.env.VITE_API_MAX_DELAY) || 60000 // 1 minute max delay
+const NETWORK_RETRY_DELAY = parseInt(import.meta.env.VITE_API_NETWORK_RETRY_DELAY) || 30000 // 30 seconds
 
-// API call tracking for rate limiting (5 calls per minute) with localStorage persistence
-const RATE_LIMIT = 5
-const RATE_WINDOW = 60000 // 1 minute
-const STORAGE_KEY = 'polygon_api_calls'
+// API call tracking for rate limiting with localStorage persistence
+const RATE_LIMIT = parseInt(import.meta.env.VITE_API_RATE_LIMIT) || 5
+const RATE_WINDOW = parseInt(import.meta.env.VITE_API_RATE_WINDOW) || 60000 // 1 minute
+const STORAGE_KEY = import.meta.env.VITE_RATE_LIMIT_STORAGE_KEY || 'polygon_api_calls'
 
 // Get API call timestamps from localStorage
 const getApiCallTimestamps = (): number[] => {
@@ -126,7 +128,7 @@ async function polygonApiCall<T>(endpoint: string, params: Record<string, string
     // Very conservative retry on network errors
     if (retryCount < 1 && error instanceof Error && 
         (error.message.includes('fetch') || error.message.includes('network'))) {
-      const delay = 30000 // 30 second delay for network errors
+      const delay = NETWORK_RETRY_DELAY
       console.warn(`Network error. Retrying in ${Math.round(delay / 1000)}s (attempt ${retryCount + 1}/1)`)
       await sleep(delay)
       return polygonApiCall<T>(endpoint, params, retryCount + 1)
