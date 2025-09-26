@@ -96,17 +96,17 @@ const StockDetailModal = ({ stock, isOpen, onClose }: StockDetailModalProps) => 
     <Modal isOpen={isOpen} onClose={onClose} title={`${stock.ticker} - ${stock.companyName}`}>
       <div className="space-y-6">
         {/* Rate limit status */}
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">API Calls Remaining:</span>
-            <span className={`font-medium ${rateLimitStatus.remainingCalls > 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <span className="text-gray-600 dark:text-gray-300">API Calls Remaining:</span>
+            <span className={`font-medium ${rateLimitStatus.remainingCalls > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
               {rateLimitStatus.remainingCalls}/{rateLimitStatus.totalCalls}
             </span>
           </div>
           {rateLimitStatus.timeUntilNextCall > 0 && (
             <div className="flex items-center justify-between text-sm mt-1">
-              <span className="text-gray-600">Next call in:</span>
-              <span className="font-medium text-orange-600">
+              <span className="text-gray-600 dark:text-gray-300">Next call in:</span>
+              <span className="font-medium text-orange-600 dark:text-orange-400">
                 {Math.round(rateLimitStatus.timeUntilNextCall / 1000)}s
               </span>
             </div>
@@ -116,18 +116,18 @@ const StockDetailModal = ({ stock, isOpen, onClose }: StockDetailModalProps) => 
         {loading && (
           <div className="flex items-center justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-            <span className="ml-3 text-gray-600">Fetching live data...</span>
+            <span className="ml-3 text-gray-600 dark:text-gray-300">Fetching live data...</span>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
             <div className="flex">
-              <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-red-400 dark:text-red-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
               </svg>
               <div className="ml-3">
-                <p className="text-sm text-red-800">{error}</p>
+                <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
               </div>
             </div>
           </div>
@@ -136,13 +136,13 @@ const StockDetailModal = ({ stock, isOpen, onClose }: StockDetailModalProps) => 
         {priceData && (
           <div className="space-y-4">
             {/* Price Information */}
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
               <div className="text-center mb-4">
-                <div className="text-3xl font-bold text-gray-900">
+                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {formatCurrency(priceData.price)}
                 </div>
                 <div className={`text-lg font-medium flex items-center justify-center space-x-2 mt-1 ${
-                  isPositive ? 'text-green-600' : 'text-red-600'
+                  isPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                 }`}>
                   <span>
                     {isPositive ? '+' : ''}{formatCurrency(priceData.change)}
@@ -165,35 +165,35 @@ const StockDetailModal = ({ stock, isOpen, onClose }: StockDetailModalProps) => 
               {/* OHLV Data */}
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Open:</span>
-                  <span className="font-medium">{formatCurrency(priceData.open)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">Open:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{formatCurrency(priceData.open)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">High:</span>
-                  <span className="font-medium">{formatCurrency(priceData.high)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">High:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{formatCurrency(priceData.high)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Low:</span>
-                  <span className="font-medium">{formatCurrency(priceData.low)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">Low:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{formatCurrency(priceData.low)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Volume:</span>
-                  <span className="font-medium">{formatVolume(priceData.volume)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">Volume:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{formatVolume(priceData.volume)}</span>
                 </div>
               </div>
             </div>
 
             {/* Stock Info */}
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Sector:</span>
-                  <span className="font-medium">{stock.sector}</span>
+                  <span className="text-gray-500 dark:text-gray-400">Sector:</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{stock.sector}</span>
                 </div>
                 {stock.description && (
                   <div>
-                    <span className="text-gray-500">Description:</span>
-                    <p className="text-gray-700 mt-1">{stock.description}</p>
+                    <span className="text-gray-500 dark:text-gray-400">Description:</span>
+                    <p className="text-gray-700 dark:text-gray-300 mt-1">{stock.description}</p>
                   </div>
                 )}
               </div>

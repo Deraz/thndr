@@ -6,6 +6,7 @@ A modern, responsive React application for exploring Nasdaq stock market data wi
 
 ### 🎯 Core Functionality
 - **Splash Screen**: Branded loading experience with Nasdaq logo
+- **Dark Mode**: System-aware theme switching with localStorage persistence
 - **Live Stock Data**: Real-time stock listings from Polygon.io API
 - **Infinite Scrolling**: Seamless browsing through thousands of stocks
 - **Smart Search**: Debounced search with backend filtering
@@ -40,6 +41,7 @@ User Interaction → React Query → Stock Service → Polygon.io API
 ### 🏗️ Feature-Based Architecture
 - **Splash Feature**: Self-contained splash screen with timing logic
 - **Explore Feature**: Complete stock exploration functionality
+- **Dark Mode System**: Smart theme detection and persistence
 - **Shared Components**: Reusable UI components across features
 - **Clean Imports**: Each feature exports through index.ts
 
@@ -62,6 +64,7 @@ User Interaction → React Query → Stock Service → Polygon.io API
 - **Infinite Scroll**: Loads more content 1000px before reaching bottom
 - **Rate Limit UI**: Real-time feedback with countdown timers
 - **Error Recovery**: Automatic retries with exponential backoff
+- **Dark Mode Priority**: localStorage → system preference → light default
 
 ### 🔄 Caching Techniques
 
@@ -91,6 +94,34 @@ refetchInterval: 5 * 60 * 1000,  // 5 minutes
 ```typescript
 // Survives page refreshes and browser restarts
 localStorage.setItem('polygon_api_calls', JSON.stringify(timestamps))
+```
+
+### 🌙 Dark Mode System
+
+The application features an intelligent dark mode system with smart detection:
+
+#### **Priority Order:**
+1. **localStorage**: User's previously saved preference
+2. **System Preference**: Browser/OS dark mode setting
+3. **Default**: Light mode fallback
+
+#### **Features:**
+- **Smart Detection**: Automatically detects system preference on first visit
+- **Persistent Storage**: Remembers user choice across sessions
+- **Live Updates**: Responds to system theme changes when no preference is saved
+- **Smooth Transitions**: CSS transitions for seamless theme switching
+- **Accessibility**: Proper ARIA labels and keyboard navigation
+
+#### **Usage:**
+```typescript
+const { isDark, toggleTheme, setTheme } = useDarkMode()
+
+// Toggle between light/dark
+toggleTheme()
+
+// Set specific theme
+setTheme('dark')
+setTheme('light')
 ```
 
 ## 🚀 Getting Started
@@ -192,6 +223,9 @@ VITE_SCROLL_THRESHOLD=1000               # Infinite scroll trigger (px)
 # Splash Screen
 VITE_SPLASH_DURATION=3000                # Splash screen duration (ms)
 VITE_SPLASH_FADE_DURATION=500            # Fade out duration (ms)
+
+# Dark Mode
+VITE_THEME_STORAGE_KEY="theme-preference" # localStorage key for theme
 ```
 
 #### 📱 Application
@@ -213,7 +247,9 @@ The application automatically adapts to different environments:
 ```
 src/
 ├── components/          # Reusable UI components
-│   └── ui/             # Base UI components (Modal, SearchInput, etc.)
+│   └── ui/             # Base UI components (Modal, SearchInput, DarkModeToggle, etc.)
+├── hooks/              # Custom React hooks
+│   └── useDarkMode.ts  # Dark mode management hook
 ├── features/           # Feature-based organization
 │   ├── explore/        # Stock exploration feature
 │   │   ├── components/ # Feature-specific components

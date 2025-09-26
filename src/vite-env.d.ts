@@ -33,6 +33,7 @@ interface ImportMetaEnv {
   
   // localStorage Configuration
   readonly VITE_RATE_LIMIT_STORAGE_KEY: string
+  readonly VITE_THEME_STORAGE_KEY: string
 }
 
 interface ImportMeta {

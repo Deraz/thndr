@@ -67,10 +67,10 @@ const StockList = ({ searchQuery, onStockClick }: StockListProps) => {
 
       {/* Results header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           {searchQuery ? `Search Results for "${searchQuery}"` : 'All Stocks'}
         </h2>
-        <p className="text-gray-600 mt-1">
+        <p className="text-gray-600 dark:text-gray-300 mt-1">
           {totalCount.toLocaleString()} stocks found
         </p>
       </div>
@@ -93,7 +93,7 @@ const StockList = ({ searchQuery, onStockClick }: StockListProps) => {
             <div className="mt-8 text-center">
               <div className="inline-flex items-center space-x-2">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600"></div>
-                <span className="text-gray-600">Loading more stocks...</span>
+                <span className="text-gray-600 dark:text-gray-300">Loading more stocks...</span>
               </div>
             </div>
           )}
@@ -101,7 +101,7 @@ const StockList = ({ searchQuery, onStockClick }: StockListProps) => {
           {/* End of results */}
           {!hasNextPage && stocks.length > 0 && (
             <div className="mt-8 text-center">
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 You've reached the end of the results
               </p>
             </div>
@@ -109,11 +109,11 @@ const StockList = ({ searchQuery, onStockClick }: StockListProps) => {
         </>
       ) : (
         <div className="text-center py-12">
-          <div className="text-gray-400 text-6xl mb-4">📈</div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">📈</div>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
             No stocks found
           </h3>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             {searchQuery
               ? `No stocks match "${searchQuery}". Try a different search term.`
               : 'No stocks available at the moment.'}

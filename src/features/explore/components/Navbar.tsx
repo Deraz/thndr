@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import SearchInput from '@/components/ui/SearchInput'
+import DarkModeToggle from '@/components/ui/DarkModeToggle'
 import { getRateLimitStatus } from '@/lib/polygonApi'
+import { useDarkMode } from '@/hooks/useDarkMode'
 
 interface NavbarProps {
   onSearch: (query: string) => void
@@ -10,7 +12,7 @@ interface NavbarProps {
 const Navbar = ({ onSearch, searchQuery }: NavbarProps) => {
   const [localQuery, setLocalQuery] = useState(searchQuery)
   const [rateLimitStatus, setRateLimitStatus] = useState(getRateLimitStatus())
-
+  const { isDark, toggleTheme, isLoading } = useDarkMode()
   useEffect(() => {
     const updateInterval = parseInt(import.meta.env.VITE_RATE_LIMIT_UPDATE_INTERVAL) || 1000
     const interval = setInterval(() => {
@@ -38,12 +40,12 @@ const Navbar = ({ onSearch, searchQuery }: NavbarProps) => {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Nasdaq Logo */}
-          <img src="/images/nasdaq-full-logo.png" alt="Nasdaq Logo" className="w-24" />
+          <img src={isDark ? "/images/nasdaq-white-logo.png" : "/images/nasdaq-full-logo.png"} alt="Nasdaq Logo" className="w-24" />
 
           {/* Search */}
           <div className="flex-1 max-w-lg mx-8">
@@ -69,14 +71,15 @@ const Navbar = ({ onSearch, searchQuery }: NavbarProps) => {
             </div>
           </div>
 
-          {/* Right side - API status */}
+          {/* Right side - Dark mode toggle and API status */}
           <div className="flex items-center space-x-4">
             <div className="text-sm">
-              <span className="text-gray-500">API calls: </span>
-              <span className={`font-medium ${rateLimitStatus.remainingCalls > 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <span className="text-gray-500 dark:text-gray-400">API calls: </span>
+              <span className={`font-medium ${rateLimitStatus.remainingCalls > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                 {rateLimitStatus.remainingCalls}/{rateLimitStatus.totalCalls}
               </span>
             </div>
+            <DarkModeToggle isDark={isDark} toggleTheme={toggleTheme} isLoading={isLoading} />
           </div>
         </div>
       </div>

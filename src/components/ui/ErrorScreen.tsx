@@ -16,9 +16,9 @@ const ErrorScreen = ({
       <div className="text-center max-w-md mx-auto px-4">
         {/* Error Icon */}
         <div className="mb-6">
-          <div className="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 mx-auto bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
             <svg 
-              className="w-8 h-8 text-red-600" 
+              className="w-8 h-8 text-red-600 dark:text-red-400" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -34,10 +34,10 @@ const ErrorScreen = ({
         </div>
 
         {/* Error Content */}
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
           {title}
         </h3>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 dark:text-gray-300 mb-6">
           {message}
         </p>
 
@@ -65,8 +65,8 @@ const ErrorScreen = ({
         )}
 
         {/* Additional Help */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-sm text-gray-500">
+        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             If the problem persists, please check your internet connection or try again later.
           </p>
         </div>
