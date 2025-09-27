@@ -203,15 +203,17 @@ describe('StockCard', () => {
     // Card should be focusable if it has onClick
     if (card) {
       // Add keyboard event handler for testing
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+      card.addEventListener('keydown', (e: Event) => {
+        const keyboardEvent = e as KeyboardEvent
+        if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
           mockOnClick(mockStock)
         }
       })
       
       // Simulate tab navigation
       card.setAttribute('tabindex', '0')
-      card.focus()
+      const focusableCard = card as HTMLElement
+      focusableCard.focus()
       
       if (document.activeElement === card) {
         await user.keyboard('{Enter}')

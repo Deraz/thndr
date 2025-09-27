@@ -53,14 +53,20 @@ Object.defineProperty(window, 'matchMedia', {
 })
 
 // Mock fetch
-global.fetch = vi.fn()
+Object.defineProperty(globalThis, 'fetch', {
+  value: vi.fn(),
+  writable: true,
+})
 
 // Mock IntersectionObserver
-global.IntersectionObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}))
+Object.defineProperty(globalThis, 'IntersectionObserver', {
+  value: vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  })),
+  writable: true,
+})
 
 // Reset all mocks before each test
 beforeEach(() => {

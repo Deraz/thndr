@@ -202,7 +202,7 @@ describe('Navbar', () => {
   })
 
   it('should clean up interval on unmount', () => {
-    const clearIntervalSpy = vi.spyOn(global, 'clearInterval')
+    const clearIntervalSpy = vi.spyOn(globalThis, 'clearInterval')
     
     const { unmount } = render(<Navbar onSearch={mockOnSearch} searchQuery="" />)
     
@@ -245,9 +245,13 @@ describe('Navbar', () => {
   })
 
   it('should handle environment variable for debounce delay', () => {
-    // Mock environment variable
+    // Mock environment variable using Object.defineProperty
     const originalEnv = import.meta.env.VITE_SEARCH_DEBOUNCE_DELAY
-    import.meta.env.VITE_SEARCH_DEBOUNCE_DELAY = '500'
+    Object.defineProperty(import.meta.env, 'VITE_SEARCH_DEBOUNCE_DELAY', {
+      value: '500',
+      writable: true,
+      configurable: true,
+    })
 
     render(<Navbar onSearch={mockOnSearch} searchQuery="" />)
 
@@ -256,6 +260,10 @@ describe('Navbar', () => {
     expect(searchInput).toBeInTheDocument()
 
     // Restore
-    import.meta.env.VITE_SEARCH_DEBOUNCE_DELAY = originalEnv
+    Object.defineProperty(import.meta.env, 'VITE_SEARCH_DEBOUNCE_DELAY', {
+      value: originalEnv,
+      writable: true,
+      configurable: true,
+    })
   })
 })
