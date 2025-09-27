@@ -14,6 +14,12 @@ const stockListCache = new Map<
 const paginationCache = new Map<string, string>(); // key: search query, value: next cursor
 const CACHE_DURATION = parseInt(import.meta.env.VITE_CACHE_DURATION) || 30 * 60 * 1000; // 30 minutes - very long cache
 
+// Function to clear caches (for testing)
+export const clearCaches = () => {
+  stockListCache.clear();
+  paginationCache.clear();
+};
+
 // Function to transform Polygon ticker to our Stock interface (no price data)
 const transformTickerToStock = (ticker: PolygonTicker): Stock => {
   return {
